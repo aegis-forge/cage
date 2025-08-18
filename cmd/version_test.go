@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -107,6 +106,38 @@ func TestNewVersionRangeEmpty(t *testing.T) {
 	}
 }
 
+func TestNewVersionRangeStartEqualEndValid(t *testing.T) {
+	version, _ := NewSemver("v1")
+
+	if _, err := NewVersionRange(version, version, true, true); err != nil {
+		t.Error(err)
+	}
+}
+
+func TestNewVersionRangeStartEqualEndInvalid(t *testing.T) {
+	version, _ := NewSemver("v1")
+
+	if _, err := NewVersionRange(version, version, false, true); err == nil {
+		t.Error(err)
+	}
+}
+
+func TestNewVersionRangeStartEqualEndInvalid2(t *testing.T) {
+	version, _ := NewSemver("v1")
+
+	if _, err := NewVersionRange(version, version, true, false); err == nil {
+		t.Error(err)
+	}
+}
+
+func TestNewVersionRangeStartEqualEndInvalid3(t *testing.T) {
+	version, _ := NewSemver("v1")
+
+	if _, err := NewVersionRange(version, version, false, false); err == nil {
+		t.Error(err)
+	}
+}
+
 // ===============================
 // ==== NewVersionRangeString ====
 // ===============================
@@ -175,9 +206,18 @@ func TestVersionRangeStringValidEqualAlt(t *testing.T) {
 	testRange, _ := NewVersionRange("v11.0.2", "v11.0.2", true, true)
 
 	if vRange, err := NewVersionRangeString("= v11.0.2"); err == nil {
-		fmt.Println(testRange)
-		fmt.Println(vRange)
+		if !testRange.Equals(*vRange) {
+			t.Error("the two ranges are different")
+		}
+	} else {
+		t.Error(err.Error())
+	}
+}
 
+func TestVersionRangeStringValidEqualAltAlt(t *testing.T) {
+	testRange, _ := NewVersionRange("v11", "v11", true, true)
+
+	if vRange, err := NewVersionRangeString("11"); err == nil {
 		if !testRange.Equals(*vRange) {
 			t.Error("the two ranges are different")
 		}

@@ -48,8 +48,8 @@ func (s Semver) Equals(sv Semver) bool {
 // ==== VersionRange ====
 // ======================
 
-// operators is a slice of all the supported operators 
-var operators = []string{ ">", ">=", "<", "<=", "=", "=="}
+// operators is a slice of all the supported operators
+var operators = []string{">", ">=", "<", "<=", "=", "==", ""}
 
 // VersionRange is used to store ranges of versions. If `start` is empty, the
 // range will be `< end`. If `end` is empty, then it means `== start`.
@@ -79,6 +79,10 @@ func NewVersionRange(start, end Semver, left, right bool) (*VersionRange, error)
 			return nil, errors.New("start is greater to end")
 		}
 	}
+	
+	if start.Equals(end) && (!left || !right) {
+		return nil, errors.New("if start == end, then both left and right must be true")
+	}
 
 	return &VersionRange{
 		start: start, end: end, includeLeft: left, includeRight: right,
@@ -104,7 +108,7 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	if !slices.Contains(operators, operator) {
 		return nil, fmt.Errorf("the operator \"%s\" is not valid", operator)
 	}
@@ -124,6 +128,8 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 	case "<":
 		v0, _ := NewSemver("0.0.0")
 		finalRange, _ = NewVersionRange(v0, version, false, false)
+	default:
+		finalRange, _ = NewVersionRange(version, version, true, true)
 	}
 
 	return finalRange, nil
@@ -131,6 +137,6 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 
 // Equals checks if two [VersionRange] are equal (i.e. same start and end)
 func (v *VersionRange) Equals(vr VersionRange) bool {
-	return v.start.Equals(vr.start) && v.end.Equals(vr.end) && 
+	return v.start.Equals(vr.start) && v.end.Equals(vr.end) &&
 		v.includeLeft == vr.includeLeft && v.includeRight == vr.includeRight
 }
