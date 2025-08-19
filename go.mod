@@ -1,4 +1,4 @@
-module github.com/aegis-forge/cage
+module github.com/aegis-forge/cage-go
 
 go 1.23.3
 
