@@ -39,7 +39,17 @@ func (s Semver) IsValid() bool {
 	return semver.IsValid(string(s))
 }
 
-// Equals checks if two [Semver] are equal
+// Before checks if the passed [Semver] is smaller than the original [Semver]
+func (s Semver) Before(sv Semver) bool {
+	return semver.Compare(string(s), string(sv)) == -1
+}
+
+// Before checks if the passed [Semver] is bigger than the original [Semver]
+func (s Semver) After(sv Semver) bool {
+	return semver.Compare(string(s), string(sv)) == 1
+}
+
+// Equals checks if the passed [Semver] is equal to the original [Semver]
 func (s Semver) Equals(sv Semver) bool {
 	return semver.Compare(string(s), string(sv)) == 0
 }
@@ -79,7 +89,11 @@ func NewVersionRange(start, end Semver, left, right bool) (*VersionRange, error)
 			return nil, errors.New("start is greater to end")
 		}
 	}
-	
+
+	if start == "" {
+		start, _ = NewSemver("v0.0.0")
+	}
+
 	if start.Equals(end) && (!left || !right) {
 		return nil, errors.New("if start == end, then both left and right must be true")
 	}
@@ -124,10 +138,10 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 		finalRange, _ = NewVersionRange(version, "", false, false)
 	case "<=":
 		v0, _ := NewSemver("0.0.0")
-		finalRange, _ = NewVersionRange(v0, version, false, true)
+		finalRange, _ = NewVersionRange(v0, version, true, true)
 	case "<":
 		v0, _ := NewSemver("0.0.0")
-		finalRange, _ = NewVersionRange(v0, version, false, false)
+		finalRange, _ = NewVersionRange(v0, version, true, false)
 	default:
 		finalRange, _ = NewVersionRange(version, version, true, true)
 	}
@@ -139,4 +153,37 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 func (v *VersionRange) Equals(vr VersionRange) bool {
 	return v.start.Equals(vr.start) && v.end.Equals(vr.end) &&
 		v.includeLeft == vr.includeLeft && v.includeRight == vr.includeRight
+}
+
+// Contains checks if a [Semver] is contained in a [VersionRange] struct
+func (v *VersionRange) Contains(s Semver) bool {
+	afterLeft := false
+	beforeRight := false
+	
+	// Check if >= than start
+	if v.includeLeft && (s.Equals(v.start) || s.After(v.start)) {
+		afterLeft = true
+	}
+	
+	// Check if > than start
+	if !v.includeLeft && !s.Equals(v.start) && s.After(v.start) {
+		afterLeft = true
+	}
+	
+	// Open-ended range
+	if v.end == "" {
+		beforeRight = true
+	} else {
+		// Check if <= than end
+		if v.includeRight && (s.Equals(v.end) || s.Before(v.end)) {
+			beforeRight = true
+		}
+		
+		// Check if < than end
+		if !v.includeRight && !s.Equals(v.end) && s.Before(v.end) {
+			beforeRight = true
+		}
+	}
+	
+	return afterLeft && beforeRight
 }
