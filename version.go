@@ -66,8 +66,8 @@ var operators = []string{">", ">=", "<", "<=", "=", "==", ""}
 type VersionRange struct {
 	start        Semver
 	end          Semver
-	includeRight bool
 	includeLeft  bool
+	includeRight bool
 }
 
 // NewVersionRange creates a new [VersionRanges] and checks if it's valid
