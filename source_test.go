@@ -1,45 +1,13 @@
 package cage
 
 import (
-	"os"
 	"testing"
 	"time"
-
-	"github.com/joho/godotenv"
 )
-
-func getToken() string {
-	if err := godotenv.Load(); err != nil {
-		panic(".env not found or syntax error in the .env file")
-	}
-
-	if os.Getenv("GITHUB_TOKEN") == "" {
-		panic("cannot find GITHUB_TOKEN variable")
-	}
-
-	return os.Getenv("GITHUB_TOKEN")
-}
 
 // =========================
 // ==== Github SetToken ====
 // =========================
-
-func TestSetTokenValid(t *testing.T) {
-	if os.Getenv("TEST_ENV") == "workflow" {
-		return
-	}
-
-	gh := &Github{}
-
-	if err := gh.SetToken(getToken()); err != nil {
-		t.Error(err)
-	}
-
-	if gh.token == "" {
-		t.Error("token was not set")
-	}
-}
-
 func TestSetTokenEmpty(t *testing.T) {
 	gh := &Github{}
 

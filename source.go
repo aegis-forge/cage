@@ -199,7 +199,7 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 				if err != nil {
 					return nil, err
 				}
-				
+
 				patchedRanges = append(patchedRanges, *r)
 			} else {
 				patchedRanges = append(patchedRanges, VersionRange{})
@@ -223,7 +223,7 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 
 		vulns = append(vulns, *vuln)
 	}
-	
+
 	fmt.Println(rawVulns)
 	fmt.Println()
 
@@ -250,20 +250,20 @@ func (g Github) CompareVulnerabilities(vulns []Vulnerability, packg Package) ([]
 		for i, vulnRange := range vuln.rangesVulnerable {
 			v := false
 			vp := vuln.rangesPatched[i]
-			
+
 			if vulnRange.Contains(packg.version) {
 				v = true
 			}
-			
+
 			if vp.start == "" && vp.end == "" {
 				continue
 			} else if vp.Contains(packg.version) {
 				v = false
 			}
-			
+
 			vs = append(vs, v)
 		}
-		
+
 		comp := slices.Compact(vs)
 
 		if len(comp) > 1 || (len(comp) == 1 && comp[0]) {

@@ -87,7 +87,7 @@ func TestNewVersionRangeInvalidRange(t *testing.T) {
 func TestNewVersionRangeEmptyStart(t *testing.T) {
 	start, _ := NewSemver("v0.0.0")
 	end, _ := NewSemver("v1")
-	exp, _ := NewVersionRange(start, end, false, false) 
+	exp, _ := NewVersionRange(start, end, false, false)
 
 	if r, err := NewVersionRange("", end, false, false); err != nil {
 		t.Error(err)
@@ -368,10 +368,10 @@ func TestVersionRangeEqualsDifferentIncludesRight(t *testing.T) {
 func TestVersionRangeContainsTrueNoIncludes(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v2")
 	r, _ := NewVersionRange(v1, v2, false, false)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range %s < v < %s should not contain %s", r.start, r.end, v)
 	}
@@ -380,10 +380,10 @@ func TestVersionRangeContainsTrueNoIncludes(t *testing.T) {
 func TestVersionRangeContainsTrueLeftInclude(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v1")
 	r, _ := NewVersionRange(v1, v2, true, false)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range %s <= v < %s should not contain %s", r.start, r.end, v)
 	}
@@ -392,10 +392,10 @@ func TestVersionRangeContainsTrueLeftInclude(t *testing.T) {
 func TestVersionRangeContainsTrueRightInclude(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v3")
 	r, _ := NewVersionRange(v1, v2, false, true)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range %s < v <= %s should not contain %s", r.start, r.end, v)
 	}
@@ -404,15 +404,15 @@ func TestVersionRangeContainsTrueRightInclude(t *testing.T) {
 func TestVersionRangeContainsTrueAllInclude(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v1")
 	va, _ := NewSemver("v3")
 	r, _ := NewVersionRange(v1, v2, true, true)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
 	}
-	
+
 	if !r.Contains(va) {
 		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
 	}
@@ -420,10 +420,10 @@ func TestVersionRangeContainsTrueAllInclude(t *testing.T) {
 
 func TestVersionRangeContainsTrueAllIncludeAlt(t *testing.T) {
 	v1, _ := NewSemver("v1")
-	
+
 	v, _ := NewSemver("v1")
 	r, _ := NewVersionRange(v1, v1, true, true)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
 	}
@@ -432,15 +432,15 @@ func TestVersionRangeContainsTrueAllIncludeAlt(t *testing.T) {
 func TestVersionRangeContainsFalseNoInclude(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v3")
 	vr, _ := NewSemver("v0")
 	r, _ := NewVersionRange(v1, v2, false, false)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range %s < v < %s should contain %s", r.start, r.end, v)
 	}
-	
+
 	if r.Contains(vr) {
 		t.Errorf("range %s < v < %s should contain %s", r.start, r.end, v)
 	}
@@ -449,15 +449,15 @@ func TestVersionRangeContainsFalseNoInclude(t *testing.T) {
 func TestVersionRangeContainsFalseIncludeLeft(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v3")
 	vr, _ := NewSemver("v0")
 	r, _ := NewVersionRange(v1, v2, true, false)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range %s <= v < %s should contain %s", r.start, r.end, v)
 	}
-	
+
 	if r.Contains(vr) {
 		t.Errorf("range %s <= v < %s should contain %s", r.start, r.end, v)
 	}
@@ -466,15 +466,15 @@ func TestVersionRangeContainsFalseIncludeLeft(t *testing.T) {
 func TestVersionRangeContainsFalseIncludeRight(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v4")
 	vr, _ := NewSemver("v0")
 	r, _ := NewVersionRange(v1, v2, false, true)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range %s < v <= %s should contain %s", r.start, r.end, v)
 	}
-	
+
 	if r.Contains(vr) {
 		t.Errorf("range %s < v <= %s should contain %s", r.start, r.end, v)
 	}
@@ -483,15 +483,15 @@ func TestVersionRangeContainsFalseIncludeRight(t *testing.T) {
 func TestVersionRangeContainsFalseIncludeAll(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v4")
 	vr, _ := NewSemver("v0")
 	r, _ := NewVersionRange(v1, v2, true, true)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
 	}
-	
+
 	if r.Contains(vr) {
 		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
 	}
@@ -500,10 +500,10 @@ func TestVersionRangeContainsFalseIncludeAll(t *testing.T) {
 func TestVersionRangeContainsFalseIncludeAllAlt(t *testing.T) {
 	v1, _ := NewSemver("v1")
 	v2, _ := NewSemver("v1")
-	
+
 	v, _ := NewSemver("v1.1")
 	r, _ := NewVersionRange(v1, v2, true, true)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
 	}
@@ -511,15 +511,15 @@ func TestVersionRangeContainsFalseIncludeAllAlt(t *testing.T) {
 
 func TestVersionRangeContainsTrueOpenEnded(t *testing.T) {
 	v1, _ := NewSemver("v1")
-	
+
 	v, _ := NewSemver("v1")
 	vr, _ := NewSemver("v100")
 	r, _ := NewVersionRange(v1, "", true, false)
-	
+
 	if !r.Contains(v) {
 		t.Errorf("range v >= %s should not contain %s", r.start, v)
 	}
-	
+
 	if !r.Contains(vr) {
 		t.Errorf("range v >= %s should not contain %s", r.start, v)
 	}
@@ -527,10 +527,10 @@ func TestVersionRangeContainsTrueOpenEnded(t *testing.T) {
 
 func TestVersionRangeContainsFalseOpenEnded(t *testing.T) {
 	v1, _ := NewSemver("v3")
-	
+
 	v, _ := NewSemver("v2")
 	r, _ := NewVersionRange(v1, "", true, false)
-	
+
 	if r.Contains(v) {
 		t.Errorf("range v >= %s should contain %s", r.start, v)
 	}

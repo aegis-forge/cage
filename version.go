@@ -159,17 +159,17 @@ func (v *VersionRange) Equals(vr VersionRange) bool {
 func (v *VersionRange) Contains(s Semver) bool {
 	afterLeft := false
 	beforeRight := false
-	
+
 	// Check if >= than start
 	if v.includeLeft && (s.Equals(v.start) || s.After(v.start)) {
 		afterLeft = true
 	}
-	
+
 	// Check if > than start
 	if !v.includeLeft && !s.Equals(v.start) && s.After(v.start) {
 		afterLeft = true
 	}
-	
+
 	// Open-ended range
 	if v.end == "" {
 		beforeRight = true
@@ -178,12 +178,12 @@ func (v *VersionRange) Contains(s Semver) bool {
 		if v.includeRight && (s.Equals(v.end) || s.Before(v.end)) {
 			beforeRight = true
 		}
-		
+
 		// Check if < than end
 		if !v.includeRight && !s.Equals(v.end) && s.Before(v.end) {
 			beforeRight = true
 		}
 	}
-	
+
 	return afterLeft && beforeRight
 }

@@ -48,7 +48,7 @@ func (p *Package) IsVulnerable(sources []Source) ([]Vulnerability, error) {
 		if err != nil {
 			return nil, err
 		}
-		
+
 		slices.SortFunc(vulns, func(a, b Vulnerability) int {
 			if a.published.After(b.published) {
 				return -1
