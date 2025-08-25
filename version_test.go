@@ -93,8 +93,8 @@ func TestNewVersionRangeEmptyStart(t *testing.T) {
 		t.Error(err)
 	} else {
 		if !r.Equals(*exp) {
-			t.Errorf("range %s - %s not equal to range %s - %s", r.start, r.end,
-				exp.start, exp.end)
+			t.Errorf("range %s - %s not equal to range %s - %s", r.Start, r.End,
+				exp.Start, exp.End)
 		}
 	}
 }
@@ -373,7 +373,7 @@ func TestVersionRangeContainsTrueNoIncludes(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, false, false)
 
 	if !r.Contains(v) {
-		t.Errorf("range %s < v < %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v < %s should not contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -385,7 +385,7 @@ func TestVersionRangeContainsTrueLeftInclude(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, true, false)
 
 	if !r.Contains(v) {
-		t.Errorf("range %s <= v < %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v < %s should not contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -397,7 +397,7 @@ func TestVersionRangeContainsTrueRightInclude(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, false, true)
 
 	if !r.Contains(v) {
-		t.Errorf("range %s < v <= %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v <= %s should not contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -410,11 +410,11 @@ func TestVersionRangeContainsTrueAllInclude(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, true, true)
 
 	if !r.Contains(v) {
-		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should not contain %s", r.Start, r.End, v)
 	}
 
 	if !r.Contains(va) {
-		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should not contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -425,7 +425,7 @@ func TestVersionRangeContainsTrueAllIncludeAlt(t *testing.T) {
 	r, _ := NewVersionRange(v1, v1, true, true)
 
 	if !r.Contains(v) {
-		t.Errorf("range %s <= v <= %s should not contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should not contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -438,11 +438,11 @@ func TestVersionRangeContainsFalseNoInclude(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, false, false)
 
 	if r.Contains(v) {
-		t.Errorf("range %s < v < %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v < %s should contain %s", r.Start, r.End, v)
 	}
 
 	if r.Contains(vr) {
-		t.Errorf("range %s < v < %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v < %s should contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -455,11 +455,11 @@ func TestVersionRangeContainsFalseIncludeLeft(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, true, false)
 
 	if r.Contains(v) {
-		t.Errorf("range %s <= v < %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v < %s should contain %s", r.Start, r.End, v)
 	}
 
 	if r.Contains(vr) {
-		t.Errorf("range %s <= v < %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v < %s should contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -472,11 +472,11 @@ func TestVersionRangeContainsFalseIncludeRight(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, false, true)
 
 	if r.Contains(v) {
-		t.Errorf("range %s < v <= %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v <= %s should contain %s", r.Start, r.End, v)
 	}
 
 	if r.Contains(vr) {
-		t.Errorf("range %s < v <= %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s < v <= %s should contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -489,11 +489,11 @@ func TestVersionRangeContainsFalseIncludeAll(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, true, true)
 
 	if r.Contains(v) {
-		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should contain %s", r.Start, r.End, v)
 	}
 
 	if r.Contains(vr) {
-		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -505,7 +505,7 @@ func TestVersionRangeContainsFalseIncludeAllAlt(t *testing.T) {
 	r, _ := NewVersionRange(v1, v2, true, true)
 
 	if r.Contains(v) {
-		t.Errorf("range %s <= v <= %s should contain %s", r.start, r.end, v)
+		t.Errorf("range %s <= v <= %s should contain %s", r.Start, r.End, v)
 	}
 }
 
@@ -517,11 +517,11 @@ func TestVersionRangeContainsTrueOpenEnded(t *testing.T) {
 	r, _ := NewVersionRange(v1, "", true, false)
 
 	if !r.Contains(v) {
-		t.Errorf("range v >= %s should not contain %s", r.start, v)
+		t.Errorf("range v >= %s should not contain %s", r.Start, v)
 	}
 
 	if !r.Contains(vr) {
-		t.Errorf("range v >= %s should not contain %s", r.start, v)
+		t.Errorf("range v >= %s should not contain %s", r.Start, v)
 	}
 }
 
@@ -532,6 +532,6 @@ func TestVersionRangeContainsFalseOpenEnded(t *testing.T) {
 	r, _ := NewVersionRange(v1, "", true, false)
 
 	if r.Contains(v) {
-		t.Errorf("range v >= %s should contain %s", r.start, v)
+		t.Errorf("range v >= %s should contain %s", r.Start, v)
 	}
 }

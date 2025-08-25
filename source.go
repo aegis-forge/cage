@@ -173,7 +173,7 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 					return nil, err
 				}
 
-				r, _ := NewVersionRange(r1.start, r2.end, r1.includeLeft, r2.includeRight)
+				r, _ := NewVersionRange(r1.Start, r2.End, r1.IncludeLeft, r2.IncludeRight)
 				vulnerableRanges = append(vulnerableRanges, *r)
 			} else {
 				for _, vulnString := range versions {
@@ -224,9 +224,6 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 		vulns = append(vulns, *vuln)
 	}
 
-	fmt.Println(rawVulns)
-	fmt.Println()
-
 	return vulns, err
 }
 
@@ -237,7 +234,7 @@ func (g Github) CompareVulnerabilities(vulns []Vulnerability, packg Package) ([]
 	var vulnerabilitiesClean []Vulnerability
 
 	for _, vuln := range vulns {
-		if packg.published.Before(vuln.published) {
+		if packg.published.Before(vuln.Published) {
 			continue
 		}
 
@@ -247,15 +244,15 @@ func (g Github) CompareVulnerabilities(vulns []Vulnerability, packg Package) ([]
 	for _, vuln := range vulnerabilitiesRaw {
 		var vs []bool
 
-		for i, vulnRange := range vuln.rangesVulnerable {
+		for i, vulnRange := range vuln.RangesVulnerable {
 			v := false
-			vp := vuln.rangesPatched[i]
+			vp := vuln.RangesPatched[i]
 
 			if vulnRange.Contains(packg.version) {
 				v = true
 			}
 
-			if vp.start == "" && vp.end == "" {
+			if vp.Start == "" && vp.End == "" {
 				continue
 			} else if vp.Contains(packg.version) {
 				v = false

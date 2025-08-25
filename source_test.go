@@ -56,7 +56,7 @@ func TestPackageIsVulnerableTrueA(t *testing.T) {
 	p, _ := NewPackage("a", "b", time.Now(), v)
 	vs, _ := s.CompareVulnerabilities([]Vulnerability{*vua, *vub}, *p)
 
-	if len(vs) != 1 || vs[0].cve != "a" {
+	if len(vs) != 1 || vs[0].Cve != "a" {
 		t.Error("vulnerability \"a\" should have been returned")
 	}
 }
@@ -88,7 +88,7 @@ func TestPackageIsVulnerableTrueB(t *testing.T) {
 	p, _ := NewPackage("a", "b", time.Now(), v)
 	vs, _ := s.CompareVulnerabilities([]Vulnerability{*vua, *vub}, *p)
 
-	if len(vs) != 1 || vs[0].cve != "b" {
+	if len(vs) != 1 || vs[0].Cve != "b" {
 		t.Error("vulnerability \"b\" should have been returned")
 	}
 }
@@ -120,7 +120,7 @@ func TestPackageIsVulnerableTrueAll(t *testing.T) {
 	p, _ := NewPackage("a", "b", time.Now(), v)
 	vs, _ := s.CompareVulnerabilities([]Vulnerability{*vua, *vub}, *p)
 
-	if len(vs) != 2 || (vs[0].cve != "a" && vs[0].cve != "b") {
+	if len(vs) != 2 || (vs[0].Cve != "a" && vs[0].Cve != "b") {
 		t.Error("vulnerabilities \"a\" and \"b\" should have been returned")
 	}
 }

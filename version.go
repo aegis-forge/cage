@@ -64,10 +64,10 @@ var operators = []string{">", ">=", "<", "<=", "=", "==", ""}
 // VersionRange is used to store ranges of versions. If `start` is empty, the
 // range will be `< end`. If `end` is empty, then it means `== start`.
 type VersionRange struct {
-	start        Semver
-	end          Semver
-	includeLeft  bool
-	includeRight bool
+	Start        Semver `json:"start"`
+	End          Semver `json:"end"`
+	IncludeLeft  bool   `json:"left"`
+	IncludeRight bool   `json:"right"`
 }
 
 // NewVersionRange creates a new [VersionRanges] and checks if it's valid
@@ -99,7 +99,7 @@ func NewVersionRange(start, end Semver, left, right bool) (*VersionRange, error)
 	}
 
 	return &VersionRange{
-		start: start, end: end, includeLeft: left, includeRight: right,
+		Start: start, End: end, IncludeLeft: left, IncludeRight: right,
 	}, nil
 }
 
@@ -151,8 +151,8 @@ func NewVersionRangeString(stringRange string) (*VersionRange, error) {
 
 // Equals checks if two [VersionRange] are equal (i.e. same start and end)
 func (v *VersionRange) Equals(vr VersionRange) bool {
-	return v.start.Equals(vr.start) && v.end.Equals(vr.end) &&
-		v.includeLeft == vr.includeLeft && v.includeRight == vr.includeRight
+	return v.Start.Equals(vr.Start) && v.End.Equals(vr.End) &&
+		v.IncludeLeft == vr.IncludeLeft && v.IncludeRight == vr.IncludeRight
 }
 
 // Contains checks if a [Semver] is contained in a [VersionRange] struct
@@ -161,26 +161,26 @@ func (v *VersionRange) Contains(s Semver) bool {
 	beforeRight := false
 
 	// Check if >= than start
-	if v.includeLeft && (s.Equals(v.start) || s.After(v.start)) {
+	if v.IncludeLeft && (s.Equals(v.Start) || s.After(v.Start)) {
 		afterLeft = true
 	}
 
 	// Check if > than start
-	if !v.includeLeft && !s.Equals(v.start) && s.After(v.start) {
+	if !v.IncludeLeft && !s.Equals(v.Start) && s.After(v.Start) {
 		afterLeft = true
 	}
 
 	// Open-ended range
-	if v.end == "" {
+	if v.End == "" {
 		beforeRight = true
 	} else {
 		// Check if <= than end
-		if v.includeRight && (s.Equals(v.end) || s.Before(v.end)) {
+		if v.IncludeRight && (s.Equals(v.End) || s.Before(v.End)) {
 			beforeRight = true
 		}
 
 		// Check if < than end
-		if !v.includeRight && !s.Equals(v.end) && s.Before(v.end) {
+		if !v.IncludeRight && !s.Equals(v.End) && s.Before(v.End) {
 			beforeRight = true
 		}
 	}
