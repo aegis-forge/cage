@@ -8,6 +8,7 @@ import (
 // =========================
 // ==== Github SetToken ====
 // =========================
+
 func TestSetTokenEmpty(t *testing.T) {
 	gh := &Github{}
 
