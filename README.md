@@ -63,7 +63,7 @@ func main() {
 ```
 
 > [!NOTE]
-> If you need to check a large number of Actions, you can add your own personal Github token. To do so, after initializing `go.Github{}`, simply call the `SetToken()` method on the source and pass it your token
+> If you need to check a large number of Actions, you can add your own personal Github token. To do so, after initializing `cage.Github{}`, simply call the `SetToken()` method on the source and pass it your token
 
 <details>
     <summary>Output</summary>
