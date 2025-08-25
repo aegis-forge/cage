@@ -62,6 +62,9 @@ func main() {
 }
 ```
 
+> [!NOTE]
+> If you need to check a large number of Actions, you can add your own personal Github token. To do so, after initializing `go.Github{}`, simply call the `SetToken()` method on the source and pass it your token
+
 <details>
     <summary>Output</summary>
 
@@ -120,6 +123,21 @@ By running this code, we will get the following JSON-formatted output (as of `20
 ]
 ```
 </details>
+
+## Extend
+
+CAGE can be extended by adding custom `Source`s. To do so, the new struct must include the methods included in the `Source` interface.
+
+```go
+type Source interface {
+	GetVulnerabilities(Package) ([]Vulnerability, error)
+	CompareVulnerabilities([]Vulnerability, Package) ([]Vulnerability, error)
+}
+```
+
+In the case of the `GetVulnerabilities()` method, it will be invoked by the `Package` in its method `Package.IsVulnerable()`. Given the name of the package passed, it retrieves all the vulnerabilities for that package from the source's database.
+
+On the other hand, `CompareVulnerabilities()` is basically a custom rule to compare the `Vulnerability` objects to the `Package.version` field. It returns all detected vulnerabilities.
 
 ## Vulnerability Sources
 
