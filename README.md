@@ -63,12 +63,12 @@ func main() {
 ```
 
 > [!NOTE]
-> If you need to check a large number of Actions, you can add your own personal Github token. To do so, after initializing `cage.Github{}`, simply call the `SetToken()` method on the source and pass it your token
+> If you need to check a large number of Actions, you can add your own personal GitHub token. To do so, after initializing `cage.Github{}`, simply call the `SetToken()` method on the source and pass it your token
 
 <details>
     <summary>Output</summary>
 
-By running this code, we will get the following JSON-formatted output (as of `2025-08-25 11:38:58`):
+By running the code above, you will get the following JSON-formatted output (as of `2025-08-25 11:38:58`):
 
 ```json
 [
