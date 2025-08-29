@@ -1,6 +1,7 @@
 <p align="center">
   <img width="100" src="assets/branding/logo.svg" alt="cage logo"> <br><br>
-  <a href="https://pkg.go.dev/github.com/aegis-forge/cage"><img src="https://pkg.go.dev/badge/github.com/aegis-forge/cage.svg"></a
+  <a href="https://pkg.go.dev/github.com/aegis-forge/cage"><img src="https://pkg.go.dev/badge/github.com/aegis-forge/cage.svg" alt="Go reference"></a>
+  <img src="https://github.com/aegis-forge/cage/actions/workflows/test.yml/badge.svg" alt="Go version">
   <img src="https://img.shields.io/badge/go-^v1.23.0-blue" alt="Go version">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
 </p>
