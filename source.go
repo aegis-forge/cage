@@ -96,6 +96,7 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 	// ======
 
 	type rawResponse struct {
+		Id              string
 		Cve             string `json:"cve_id"`
 		Severity        string `json:"severity"`
 		Published       string `json:"published_at"`
@@ -144,6 +145,8 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 		if err := json.NewDecoder(res.Body).Decode(&rawVuln); err != nil {
 			return nil, err
 		}
+		
+		rawVuln.Id = id.Ghsa
 
 		rawVulns = append(rawVulns, rawVuln)
 	}
@@ -213,8 +216,9 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 		}
 
 		vuln, err := NewVulnerability(
-			rawVuln.Cve, cwes, rawVuln.Cvss.Score, rawVuln.Published,
-			vulnerableRanges, patchedRanges, "2006-01-02T15:04:05Z",
+			rawVuln.Id, rawVuln.Cve, cwes, rawVuln.Cvss.Score,
+			rawVuln.Published, vulnerableRanges, patchedRanges,
+			"2006-01-02T15:04:05Z",
 		)
 
 		if err != nil {

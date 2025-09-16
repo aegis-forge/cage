@@ -43,12 +43,12 @@ func TestPackageIsVulnerableTrueA(t *testing.T) {
 	pr2, _ := NewVersionRangeString("2.293.1")
 
 	vua, _ := NewVulnerability(
-		"a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
+		"a", "a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
 		[]VersionRange{*pr1}, "2006-01-02T15:04:05Z",
 	)
 
 	vub, _ := NewVulnerability(
-		"b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
+		"a", "b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
 		[]VersionRange{*pr2}, "2006-01-02T15:04:05Z",
 	)
 
@@ -75,12 +75,12 @@ func TestPackageIsVulnerableTrueB(t *testing.T) {
 	pr2, _ := NewVersionRangeString("2.293.1")
 
 	vua, _ := NewVulnerability(
-		"a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
+		"a", "a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
 		[]VersionRange{*pr1}, "2006-01-02T15:04:05Z",
 	)
 
 	vub, _ := NewVulnerability(
-		"b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
+		"a", "b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
 		[]VersionRange{*pr2}, "2006-01-02T15:04:05Z",
 	)
 
@@ -107,12 +107,12 @@ func TestPackageIsVulnerableTrueAll(t *testing.T) {
 	pr2, _ := NewVersionRangeString("2.293.1")
 
 	vua, _ := NewVulnerability(
-		"a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
+		"a", "a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
 		[]VersionRange{*pr1}, "2006-01-02T15:04:05Z",
 	)
 
 	vub, _ := NewVulnerability(
-		"b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
+		"a", "b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
 		[]VersionRange{*pr2}, "2006-01-02T15:04:05Z",
 	)
 
@@ -139,12 +139,12 @@ func TestPackageIsVulnerableFalse(t *testing.T) {
 	pr2, _ := NewVersionRangeString("2.293.1")
 
 	vua, _ := NewVulnerability(
-		"a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
+		"a", "a", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr1},
 		[]VersionRange{*pr1}, "2006-01-02T15:04:05Z",
 	)
 
 	vub, _ := NewVulnerability(
-		"b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
+		"b", "b", []string{}, 1.0, "2025-07-25T17:51:51Z", []VersionRange{*vr2},
 		[]VersionRange{*pr2}, "2006-01-02T15:04:05Z",
 	)
 
@@ -167,7 +167,7 @@ func TestPackageIsVulnerableFalseFuture(t *testing.T) {
 	pr1, _ := NewVersionRangeString("2.296.2")
 
 	vua, _ := NewVulnerability(
-		"a", []string{}, 1.0, time.Now().Add(time.Hour).Format("2006-01-02T15:04:05Z"),
+		"a","a", []string{}, 1.0, time.Now().Add(time.Hour).Format("2006-01-02T15:04:05Z"),
 		[]VersionRange{*vr1}, []VersionRange{*pr1}, "2006-01-02T15:04:05Z",
 	)
 
