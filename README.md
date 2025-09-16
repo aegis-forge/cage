@@ -30,6 +30,7 @@ To check if a software package is vulnerable or not, you can use the following w
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"time"
 	
@@ -75,6 +76,7 @@ By running the code above, you will get the following JSON-formatted output (as 
 ```json
 [
   {
+    "id": "GHSA-gq52-6phf-x2r6",
     "cve": "CVE-2025-54416",
     "cwes": [
       "CWE-77"
@@ -99,6 +101,7 @@ By running the code above, you will get the following JSON-formatted output (as 
     ]
   },
   {
+    "id": "GHSA-8v8w-v8xg-79rf",
     "cve": "CVE-2023-49291",
     "cwes": [
       "CWE-20"
