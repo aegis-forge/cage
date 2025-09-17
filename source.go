@@ -234,18 +234,9 @@ func (g Github) GetVulnerabilities(packg Package) ([]Vulnerability, error) {
 // CompareVulnerabilities checks if the [Package] version is contained in the
 // vulns slice.
 func (g Github) CompareVulnerabilities(vulns []Vulnerability, packg Package) ([]Vulnerability, error) {
-	var vulnerabilitiesRaw []Vulnerability
 	var vulnerabilitiesClean []Vulnerability
 
 	for _, vuln := range vulns {
-		if packg.published.Before(vuln.Published) {
-			continue
-		}
-
-		vulnerabilitiesRaw = append(vulnerabilitiesRaw, vuln)
-	}
-
-	for _, vuln := range vulnerabilitiesRaw {
 		var vs []bool
 
 		for i, vulnRange := range vuln.RangesVulnerable {

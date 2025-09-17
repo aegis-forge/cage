@@ -156,26 +156,3 @@ func TestPackageIsVulnerableFalse(t *testing.T) {
 		t.Error("no vulnerability should have been returned")
 	}
 }
-
-func TestPackageIsVulnerableFalseFuture(t *testing.T) {
-	s := Github{}
-
-	v1, _ := NewSemver("0.0.0")
-	v2, _ := NewSemver("2.294.0")
-
-	vr1, _ := NewVersionRange(v1, v2, true, false)
-	pr1, _ := NewVersionRangeString("2.296.2")
-
-	vua, _ := NewVulnerability(
-		"a","a", []string{}, 1.0, time.Now().Add(time.Hour).Format("2006-01-02T15:04:05Z"),
-		[]VersionRange{*vr1}, []VersionRange{*pr1}, "2006-01-02T15:04:05Z",
-	)
-
-	v, _ := NewSemver("2")
-	p, _ := NewPackage("a", "b", time.Now(), v)
-	vs, _ := s.CompareVulnerabilities([]Vulnerability{*vua}, *p)
-
-	if len(vs) != 0 {
-		t.Error("no vulnerability should have been returned")
-	}
-}
